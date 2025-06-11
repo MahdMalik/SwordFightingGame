@@ -671,11 +671,19 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
+<<<<<<< HEAD
+  cloudProjectId: bca0bade-8760-4fd3-b2e7-d14940cf71a3
+  framebufferDepthMemorylessMode: 0
+  qualitySettingsNames: []
+  projectName: My project
+  organizationId: mahdmahdmalik-gmail-com
+=======
   cloudProjectId: 562942c7-0d76-4f1b-8b67-dc36b7d8d2b3
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: SwordyMcSwordFace
   organizationId: cheezofthehotdog
+>>>>>>> 572cae9f1ce184ca74255affa864a9c3c80a5c10
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
