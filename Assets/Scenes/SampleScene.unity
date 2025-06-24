@@ -2432,6 +2432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  player: {fileID: 1442997695}
 --- !u!95 &1126608369
 Animator:
   serializedVersion: 5
