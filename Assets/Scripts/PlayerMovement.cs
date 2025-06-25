@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     private Animator animator;
+    public float currentSpeed = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float currentSpeed = Input.GetAxisRaw("Horizontal") * speed;
+        currentSpeed = Input.GetAxisRaw("Horizontal") * speed;
         transform.position = new Vector2(transform.position.x + currentSpeed * Time.deltaTime, transform.position.y);
         //this way if speed doesn't change, just keep it as is
         if (currentSpeed > 0)
