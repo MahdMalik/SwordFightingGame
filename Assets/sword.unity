@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 369893517}
   - component: {fileID: 369893519}
-  - component: {fileID: 369893518}
+  - component: {fileID: 369893520}
   m_Layer: 0
   m_Name: SwordController
   m_TagString: Untagged
@@ -285,15 +285,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369893516}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1108787045}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &369893518
+--- !u!114 &369893519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369893516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646a78cb80872424fa96c032c59733c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordControllerBody: {fileID: 369893520}
+  playerBody: {fileID: 1462967462}
+  swordBody: {fileID: 1108787047}
+  cam: {fileID: 236059373}
+  swingSpeed: 0.5
+  currentSwingSpeed: 0
+  stabbing: 0
+  swordForce: 0
+--- !u!50 &369893520
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -320,25 +340,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &369893519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369893516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646a78cb80872424fa96c032c59733c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swordBody: {fileID: 369893518}
-  playerBody: {fileID: 1462967462}
-  cam: {fileID: 236059373}
-  swingSpeed: 0.5
-  currentSwingSpeed: 0
-  stabbing: 0
-  swordForce: 0
 --- !u!1 &1108787044
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1108787045}
   - component: {fileID: 1108787046}
+  - component: {fileID: 1108787047}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -367,7 +369,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 369893517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -423,6 +425,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1108787047
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108787044}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1462967457
 GameObject:
   m_ObjectHideFlags: 0
