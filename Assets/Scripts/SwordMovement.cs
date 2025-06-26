@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class SwordMovement : MonoBehaviour
 {
@@ -11,11 +12,21 @@ public class SwordMovement : MonoBehaviour
     public bool stabbing;
     public float swordForce;
 
+    public PlayerMovement player;
+
+    private sbyte previousReflection;
+
     // Local offset of swordBody relative to swordControllerBody, for stabbing animation
     private Vector2 localOffset = new Vector2(0f, 1f);
 
-    void Update()
+    void Start()
     {
+        previousReflection = (sbyte) player.transform.localScale.x;
+    }
+
+    public void UpdateReflection()
+    {
+
         // Move swordControllerBody to player position
         swordControllerBody.position = playerBody.position;
 
@@ -25,8 +36,13 @@ public class SwordMovement : MonoBehaviour
         //this is like the vector where swordControllerBody is the origin, thus letting us easily get the angle
         Vector2 lookDir = mousePos - swordControllerBody.position;
 
-        //get the angle through quick arctangent, then get it in degrees. Note that it assumes the axis starts counter-clockwise to your right. To aline it to the top, subtract by 90.
-        float goalAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        //get the angle through quick arctangent, then get it in degrees. Note that it assumes the axis starts counter-clockwise to your left. To aline it to the top, subtract by 90.
+        float goalAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90;
+        if (goalAngle < 0)
+        {
+            goalAngle += 360;
+        }
+        Debug.Log($"Goal angle: {goalAngle}, Current angle: {swordControllerBody.rotation}");
 
         // Normalize rotation angle
         float currentRotation = swordControllerBody.rotation;
@@ -36,8 +52,12 @@ public class SwordMovement : MonoBehaviour
         if (currentRotation >= 360f)
             currentRotation %= 360f;
 
-        //change it so now it's correct
-        swordControllerBody.rotation = currentRotation;
+        //if there's been a reflection, change the rotation acordingly
+        if (player.transform.localScale.x != previousReflection)
+        {
+            transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, transform.parent.transform.localScale.y, transform.parent.transform.localScale.z);
+            Debug.Log("We swapped!");
+        }
 
         //if not stabbing, do this
         if (!stabbing)
@@ -48,22 +68,24 @@ public class SwordMovement : MonoBehaviour
             //if we can reach it now in the next frame, get to it
             if (Mathf.Abs(diff) < currentSwingSpeed)
             {
-                swordControllerBody.rotation = goalAngle;
+                currentRotation = goalAngle;
                 swordForce = 0f;
             }
             //if not, grow closer to its location. If we have to go forwards to get closer, go forwards
             else if (diff > 0)
             {
-                swordControllerBody.rotation += currentSwingSpeed;
+                currentRotation += currentSwingSpeed;
                 swordForce++;
             }
             //if have to go backwards to get closer, go backwards
             else
             {
-                swordControllerBody.rotation -= currentSwingSpeed;
+                currentRotation -= currentSwingSpeed;
                 swordForce++;
             }
         }
+
+        Debug.Log("Swing speed: " + currentSwingSpeed);
 
         //calculate the new swing speed from the force.
         currentSwingSpeed = swingSpeed * (1 + (swordForce / 400));
@@ -93,18 +115,19 @@ public class SwordMovement : MonoBehaviour
         //this way we can end the stabbing when it's retracted enough
         if (Mathf.Approximately(localOffset.y, 1.0f))
             stabbing = false;
-    }
 
-    void FixedUpdate()
-    {
         // Calculate swordBody world position by rotating local offset by parent's rotation
-
         //note that rotatedOffset is going to be in terms of x and y coordinates, how much to change it depending on the rotation
-        Vector2 rotatedOffset = Quaternion.Euler(0, 0, swordControllerBody.rotation) * localOffset;
+        Vector2 rotatedOffset = Quaternion.Euler(0, 0, currentRotation) * localOffset;
         Vector2 desiredPos = swordControllerBody.position + rotatedOffset;
 
+        Debug.Log("New Current Angle: " + currentRotation);
+
+        previousReflection = (sbyte)player.transform.localScale.x;
+
         // Move swordBody Rigidbody2D to desired position and rotation matching parent
-        swordBody.MovePosition(desiredPos);
-        swordBody.MoveRotation(swordControllerBody.rotation);
+        swordBody.position = desiredPos;
+        swordBody.rotation = currentRotation;
+        swordControllerBody.rotation = currentRotation;
     }
 }

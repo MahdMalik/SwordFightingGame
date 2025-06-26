@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     public float currentSpeed = 0f;
     // Start is called before the first frame update
+
+    public Rigidbody2D player;
+
+    public SwordMovement sword;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -18,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         currentSpeed = Input.GetAxisRaw("Horizontal") * speed;
-        transform.position = new Vector2(transform.position.x + currentSpeed * Time.deltaTime, transform.position.y);
+        player.position = new Vector2(player.position.x + currentSpeed * Time.deltaTime, player.position.y);
         //this way if speed doesn't change, just keep it as is
         if (currentSpeed > 0)
         {
@@ -29,5 +34,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         animator.SetFloat("speed", Math.Abs(currentSpeed));
+
+        sword.UpdateReflection();
     }
 }
