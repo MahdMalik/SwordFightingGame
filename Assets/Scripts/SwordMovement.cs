@@ -21,7 +21,7 @@ public class SwordMovement : MonoBehaviour
 
     void Start()
     {
-        previousReflection = (sbyte) player.transform.localScale.x;
+        previousReflection = (sbyte)player.transform.localScale.x;
     }
 
     public void UpdateReflection()
@@ -130,4 +130,6 @@ public class SwordMovement : MonoBehaviour
         swordBody.rotation = currentRotation;
         swordControllerBody.rotation = currentRotation;
     }
+
+    
 }
