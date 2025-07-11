@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float speed;
-    private Animator animator;
-    public float currentSpeed = 0f;
-    // Start is called before the first frame update
-
-    public Rigidbody2D player;
-
     public SwordMovement sword;
-    
+    private Animator animator;
+    private float currentSpeed = 0f;
+    private Rigidbody2D player;
+    private bool hitBySword;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        HelperFunctions.AddColliders(transform);
+        player = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -35,6 +35,16 @@ public class PlayerMovement : MonoBehaviour
         }
         animator.SetFloat("speed", Math.Abs(currentSpeed));
 
-        sword.UpdateReflection();
+        sword.UpdateSword();
+
+        if (hitBySword)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    public void SetHit()
+    {
+        hitBySword = true;
     }
 }
