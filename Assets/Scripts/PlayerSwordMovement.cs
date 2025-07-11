@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class SwordMovement : MonoBehaviour
 {
@@ -12,21 +11,22 @@ public class SwordMovement : MonoBehaviour
     public bool stabbing;
     public float swordForce;
 
-    public PlayerMovement player;
+    public Player player;
 
     private sbyte previousReflection;
 
     // Local offset of swordBody relative to swordControllerBody, for stabbing animation
-    private Vector2 localOffset = new Vector2(0f, 1f);
+
+    private const float STARTING_OFFSET = 2f;
+    private Vector2 localOffset = new Vector2(0f, STARTING_OFFSET);
 
     void Start()
     {
         previousReflection = (sbyte)player.transform.localScale.x;
     }
 
-    public void UpdateReflection()
+    public void UpdateSword()
     {
-
         // Move swordControllerBody to player position
         swordControllerBody.position = playerBody.position;
 
@@ -42,7 +42,7 @@ public class SwordMovement : MonoBehaviour
         {
             goalAngle += 360;
         }
-        Debug.Log($"Goal angle: {goalAngle}, Current angle: {swordControllerBody.rotation}");
+        // Debug.Log($"Goal angle: {goalAngle}, Current angle: {swordControllerBody.rotation}");
 
         // Normalize rotation angle
         float currentRotation = swordControllerBody.rotation;
@@ -52,11 +52,11 @@ public class SwordMovement : MonoBehaviour
         if (currentRotation >= 360f)
             currentRotation %= 360f;
 
-        //if there's been a reflection, change the rotation acordingly
+        //if there's been a reflection, change the rotation acordingly. Change the reflection of the container though instead.
         if (player.transform.localScale.x != previousReflection)
         {
             transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, transform.parent.transform.localScale.y, transform.parent.transform.localScale.z);
-            Debug.Log("We swapped!");
+            // Debug.Log("We swapped!");
         }
 
         //if not stabbing, do this
@@ -85,7 +85,7 @@ public class SwordMovement : MonoBehaviour
             }
         }
 
-        Debug.Log("Swing speed: " + currentSwingSpeed);
+        // Debug.Log("Swing speed: " + currentSwingSpeed);
 
         //calculate the new swing speed from the force.
         currentSwingSpeed = swingSpeed * (1 + (swordForce / 400));
@@ -94,7 +94,7 @@ public class SwordMovement : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //if it is, being held, extend to where it should go
-            if (localOffset.y < 1.6f)
+            if (localOffset.y < STARTING_OFFSET + 0.6)
             {
                 stabbing = true;
                 localOffset.y += 0.01f;
@@ -105,7 +105,7 @@ public class SwordMovement : MonoBehaviour
         else
         {
             //otherwise, once button is let go, start retracting
-            if (localOffset.y > 1.0f)
+            if (localOffset.y > STARTING_OFFSET)
             {
                 localOffset.y -= 0.01f;
                 swordForce = 0;
@@ -113,7 +113,7 @@ public class SwordMovement : MonoBehaviour
         }
 
         //this way we can end the stabbing when it's retracted enough
-        if (Mathf.Approximately(localOffset.y, 1.0f))
+        if (Mathf.Approximately(localOffset.y, STARTING_OFFSET))
             stabbing = false;
 
         // Calculate swordBody world position by rotating local offset by parent's rotation
@@ -121,7 +121,7 @@ public class SwordMovement : MonoBehaviour
         Vector2 rotatedOffset = Quaternion.Euler(0, 0, currentRotation) * localOffset;
         Vector2 desiredPos = swordControllerBody.position + rotatedOffset;
 
-        Debug.Log("New Current Angle: " + currentRotation);
+        // Debug.Log("New Current Angle: " + currentRotation);
 
         previousReflection = (sbyte)player.transform.localScale.x;
 
