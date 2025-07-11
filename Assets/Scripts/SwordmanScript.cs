@@ -7,24 +7,19 @@ using Random = System.Random;
 public class SwordmanScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float speed;
     public Rigidbody2D playerPos;
+    public SwordmanSwordMovement theSword;
+    public float speed;
     private Animator animator;
     private Random rng;
-
-    public bool hitBySword = false;
-
-    public BoxCollider2D sword;
-
-    public Rigidbody2D swordmanPos;
-
-    public SwordmanSwordMovement theSword;
-
+    private bool hitBySword = false;
+    private Rigidbody2D swordmanPos;
     void Start()
     {
         animator = GetComponent<Animator>();
         rng = new Random();
         HelperFunctions.AddColliders(transform);
+        swordmanPos = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -41,7 +36,7 @@ public class SwordmanScript : MonoBehaviour
             }
             else if (playerPos.position.x < swordmanPos.position.x)
             {
-                currentSpeed = (float)(rng.NextDouble() / 2 + 0.5) * -1 * speed;
+                currentSpeed = (float)(rng.NextDouble() / 2 + 0.5) * speed * -1;
             }
             swordmanPos.position = new Vector2(swordmanPos.position.x + currentSpeed * Time.deltaTime, swordmanPos.position.y);
             //this way if speed doesn't change, just keep it as is

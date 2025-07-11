@@ -6,20 +6,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed;
-    private Animator animator;
-    public float currentSpeed = 0f;
-    // Start is called before the first frame update
-
-    public Rigidbody2D player;
-
     public SwordMovement sword;
-
-    public bool hitBySword = false;
+    private Animator animator;
+    private float currentSpeed = 0f;
+    private Rigidbody2D player;
+    private bool hitBySword;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         HelperFunctions.AddColliders(transform);
+        player = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame

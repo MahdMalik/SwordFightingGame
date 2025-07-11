@@ -3,17 +3,15 @@ using UnityEngine;
 public class SwordMovement : MonoBehaviour
 {
     public Rigidbody2D swordControllerBody; // Parent Rigidbody2D
-    public Rigidbody2D playerBody;          // Player Rigidbody2D
     public Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
     public Camera cam;
-    public float swingSpeed = 2f;
-    public float currentSwingSpeed;
-    public bool stabbing;
-    public float swordForce;
-
     public Player player;
-
+    public float swingSpeed = 2f;
+    private float currentSwingSpeed;
+    private bool stabbing;
+    private float swordForce;
     private sbyte previousReflection;
+    private Rigidbody2D playerBody;          // Player Rigidbody2D
 
     // Local offset of swordBody relative to swordControllerBody, for stabbing animation
 
@@ -23,21 +21,20 @@ public class SwordMovement : MonoBehaviour
     void Start()
     {
         previousReflection = (sbyte)player.transform.localScale.x;
+        playerBody = player.gameObject.GetComponent<Rigidbody2D>();
     }
 
     public void UpdateSword()
     {
+        // Get mouse position and compute goal rotation for parent
+        Vector2 pointDirection = cam.ScreenToWorldPoint(Input.mousePosition);
+        pointDirection -= swordControllerBody.position;
+
         // Move swordControllerBody to player position
         swordControllerBody.position = playerBody.position;
 
-        // Get mouse position and compute goal rotation for parent
-        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-
-        //this is like the vector where swordControllerBody is the origin, thus letting us easily get the angle
-        Vector2 lookDir = mousePos - swordControllerBody.position;
-
         //get the angle through quick arctangent, then get it in degrees. Note that it assumes the axis starts counter-clockwise to your left. To aline it to the top, subtract by 90.
-        float goalAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90;
+        float goalAngle = Mathf.Atan2(pointDirection.y, pointDirection.x) * Mathf.Rad2Deg - 90;
         if (goalAngle < 0)
         {
             goalAngle += 360;

@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class SwordmanSwordMovement : MonoBehaviour
 {
-    public Rigidbody2D swordControllerBody; // Parent Rigidbody2D
-    public Rigidbody2D swordmanBody;          // Player Rigidbody2D
-    public Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
-
-    public Rigidbody2D playerBody;
-
     public float swingSpeed = 2f;
-    public float currentSwingSpeed;
-    public float swordForce;
+    public Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
+    public Rigidbody2D playerBody;
     public SwordmanScript swordman;
+    private Rigidbody2D swordmanBody;          // Player Rigidbody2D
+    private Rigidbody2D swordControllerBody; // Parent Rigidbody2D
+    private float currentSwingSpeed;
+    private float swordForce;
     private sbyte previousReflection;
 
     // Local offset of swordBody relative to swordControllerBody, for stabbing animation
@@ -23,6 +21,8 @@ public class SwordmanSwordMovement : MonoBehaviour
     void Start()
     {
         previousReflection = (sbyte)swordman.transform.localScale.x;
+        swordmanBody = swordman.GetComponent<Rigidbody2D>();
+        swordControllerBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
