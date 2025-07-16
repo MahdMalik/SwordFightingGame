@@ -6,7 +6,7 @@ public class PlayerSword : Sword
     public Camera cam;
     private bool stabbing;
 
-    public void UpdateSword()
+    public override void UpdateSword()
     {
         // Get mouse position and compute goal rotation for parent
         Vector2 pointDirection = cam.ScreenToWorldPoint(Input.mousePosition);

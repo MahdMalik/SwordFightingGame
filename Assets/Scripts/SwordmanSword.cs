@@ -5,7 +5,7 @@ public class SwordmanSword : Sword
     public Rigidbody2D playerBody;
 
     // Update is called once per frame
-    public void UpdateSword()
+    public override void UpdateSword()
     {
         if (playerBody != null)
         {

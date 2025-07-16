@@ -9,7 +9,6 @@ public class Swordman : Person
 {
     // Start is called before the first frame update
     public Rigidbody2D playerPos;
-    public SwordmanSwordMovement theSword;
     private Random rng = new Random();
 
     // Update is called once per frame
@@ -29,8 +28,7 @@ public class Swordman : Person
                 theSpeed = (float)(rng.NextDouble() / 2 + 0.5) * speed * -1;
             }
 
-            theSword.UpdateSword();
         }
-        base.UpdateFrame(theSpeed);
+        UpdateFrame(theSpeed);
     }
 }

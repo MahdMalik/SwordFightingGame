@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Person : MonoBehaviour
+public abstract class Person : MonoBehaviour
 {
     [SerializeField]
     protected float speed;
+    [SerializeField]
+    protected Sword sword;
 
     // Start is called before the first frame update
     protected Rigidbody2D personPos;
     protected Animator animator;
     protected bool hitBySword;
-
     public void AddColliders()
     {
         BoxCollider2D swordObject = transform.Find("SwordContainer").GetChild(0).GetChild(0).gameObject.GetComponent<BoxCollider2D>();;
@@ -83,6 +84,7 @@ public class Person : MonoBehaviour
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         animator.SetFloat("speed", Math.Abs(currentSpeed));
+        sword.UpdateSword();
     }
 
     public void SetHit()

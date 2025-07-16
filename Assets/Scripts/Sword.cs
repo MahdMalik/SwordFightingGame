@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public abstract class Sword : MonoBehaviour
 {
     [SerializeField]
     protected Person person;
@@ -29,8 +29,10 @@ public class Sword : MonoBehaviour
         swordBody = transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>();
     }
 
+    public abstract void UpdateSword();
+
     // Update is called once per frame
-    protected void UpdateSword(Vector2 pointDirection, bool stabbing)
+    protected virtual void UpdateSword(Vector2 pointDirection, bool stabbing)
     {
         // Move swordControllerBody to current position
         swordControllerBody.position = personPos.position;
