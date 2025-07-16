@@ -987,10 +987,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8847e3a8769b0cc469d821f746dcbcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  person: {fileID: 1126608368}
   swingSpeed: 2
-  swordBody: {fileID: 582325145}
   playerBody: {fileID: 1442997696}
-  swordman: {fileID: 1126608368}
 --- !u!1 &369893516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,11 +1036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646a78cb80872424fa96c032c59733c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordControllerBody: {fileID: 369893520}
-  swordBody: {fileID: 1108787047}
-  cam: {fileID: 519420031}
-  player: {fileID: 1442997695}
+  person: {fileID: 1442997695}
   swingSpeed: 2
+  cam: {fileID: 519420031}
 --- !u!50 &369893520
 Rigidbody2D:
   serializedVersion: 4
@@ -1162,6 +1159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
+  - component: {fileID: 519420033}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
@@ -1290,6 +1288,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518f8c37ae43a6541aa081d2a9c9f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thePlayer: {fileID: 1442997695}
 --- !u!1 &544841155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,8 +2172,8 @@ Transform:
   m_GameObject: {fileID: 808811734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6808, y: -3.7946, z: 0.020275515}
-  m_LocalScale: {x: 15.371725, y: 0.3976266, z: 1}
+  m_LocalPosition: {x: 2.6808, y: -4.1422, z: 0.020275515}
+  m_LocalScale: {x: 15.371725, y: 0.64506966, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2930,9 +2941,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df251a09516789c42a4d3f96287a685d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 1442997696}
-  theSword: {fileID: 329952302}
   speed: 2
+  sword: {fileID: 329952302}
+  playerPos: {fileID: 1442997696}
 --- !u!95 &1126608369
 Animator:
   serializedVersion: 5
@@ -3211,8 +3222,8 @@ Transform:
   m_GameObject: {fileID: 1216729042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8428, y: 5.1625, z: 0.027552458}
-  m_LocalScale: {x: 15.087197, y: 6.465862, z: 1}
+  m_LocalPosition: {x: 2.6728, y: 5.1221, z: 0.027552458}
+  m_LocalScale: {x: 15.387652, y: 6.4949756, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
