@@ -5,7 +5,7 @@ public class SwordmanSwordMovement : MonoBehaviour
     public float swingSpeed = 2f;
     public Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
     public Rigidbody2D playerBody;
-    public SwordmanScript swordman;
+    public Swordman swordman;
     private Rigidbody2D swordmanBody;          // Player Rigidbody2D
     private Rigidbody2D swordControllerBody; // Parent Rigidbody2D
     private float currentSwingSpeed;

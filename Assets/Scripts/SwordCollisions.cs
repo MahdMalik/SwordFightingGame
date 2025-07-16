@@ -20,7 +20,7 @@ public class SwordCollisions : MonoBehaviour
         if (otherObj.name == "Swordman")
         {
             //now, we have the sowrdman object so we can delete it
-            SwordmanScript swordScript = otherObj.GetComponent<SwordmanScript>();
+            Swordman swordScript = otherObj.GetComponent<Swordman>();
             swordScript.SetHit();
             Debug.Log("Eliminating swordsman!");
             return;
