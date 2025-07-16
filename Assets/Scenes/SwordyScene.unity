@@ -987,10 +987,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8847e3a8769b0cc469d821f746dcbcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  person: {fileID: 1126608368}
   swingSpeed: 2
-  swordBody: {fileID: 582325145}
   playerBody: {fileID: 1442997696}
-  swordman: {fileID: 1126608368}
 --- !u!1 &369893516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,11 +1036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646a78cb80872424fa96c032c59733c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordControllerBody: {fileID: 369893520}
-  swordBody: {fileID: 1108787047}
-  cam: {fileID: 519420031}
-  player: {fileID: 1442997695}
+  person: {fileID: 1442997695}
   swingSpeed: 2
+  cam: {fileID: 519420031}
 --- !u!50 &369893520
 Rigidbody2D:
   serializedVersion: 4
@@ -2944,9 +2941,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df251a09516789c42a4d3f96287a685d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 1442997696}
-  theSword: {fileID: 329952302}
   speed: 2
+  sword: {fileID: 329952302}
+  playerPos: {fileID: 1442997696}
 --- !u!95 &1126608369
 Animator:
   serializedVersion: 5
