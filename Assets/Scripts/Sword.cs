@@ -20,13 +20,22 @@ public abstract class Sword : MonoBehaviour
     protected float currentSwingSpeed;
     protected Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
 
+    bool clockwise;
+
+    bool prevClockwise;
+
+    bool clashInterruption;
+
     // Start is called before the first frame update
     void Start()
     {
         personPos = person.gameObject.GetComponent<Rigidbody2D>();
         previousReflection = (sbyte)person.transform.localScale.x;
+        clockwise = true;
+        prevClockwise = clockwise;
         swordControllerBody = GetComponent<Rigidbody2D>();
         swordBody = transform.GetChild(0).GetComponent<Rigidbody2D>();
+        clashInterruption = false;
     }
 
     public abstract void UpdateSword();
@@ -35,7 +44,7 @@ public abstract class Sword : MonoBehaviour
     protected virtual void UpdateSword(Vector2 pointDirection, bool stabbing)
     {
         // Move swordControllerBody to current position
-        swordControllerBody.position = personPos.position;
+        swordControllerBody.MovePosition(personPos.position);
         // Normalize rotation angle
         float currentRotation = swordControllerBody.rotation;
 
@@ -58,31 +67,34 @@ public abstract class Sword : MonoBehaviour
         {
             transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, transform.parent.transform.localScale.y, transform.parent.transform.localScale.z);
             // Debug.Log("We swapped!");
-
-            //now though, we probably want the blade to face the opposite way. So, we shoudl do just that
-            GameObject bladeAndHilt = transform.GetChild(0).gameObject;
-            bladeAndHilt.transform.localScale = new Vector3(bladeAndHilt.transform.localScale.x * -1, bladeAndHilt.transform.localScale.y, bladeAndHilt.transform.localScale.z);
         }
 
         if (!stabbing)
         {
             float travelDistance = Mathf.DeltaAngle(currentRotation, goalAngle);
+            if (Mathf.Abs(travelDistance) > 0)
+            {
+                clockwise = travelDistance < 0;
+            }
+
             if (Mathf.Abs(travelDistance) < currentSwingSpeed)
             {
                 swordForce = 0;
                 currentRotation = goalAngle;
             }
-            else if (travelDistance < 0)
-            {
-                currentRotation -= currentSwingSpeed;
-                swordForce++;
-            }
             else
             {
-                currentRotation += currentSwingSpeed;
+                currentRotation += currentSwingSpeed * (travelDistance > 0 ? 1 : -1);
                 swordForce++;
             }
             currentSwingSpeed = swingSpeed * (1 + (swordForce / 400));
+        }
+
+        if (clockwise != prevClockwise)
+        {
+            //now though, we probably want the blade to face the opposite way. So, we shoudl do just that
+            GameObject bladeAndHilt = transform.GetChild(0).gameObject;
+            bladeAndHilt.transform.localScale = new Vector3(bladeAndHilt.transform.localScale.x * -1, bladeAndHilt.transform.localScale.y, bladeAndHilt.transform.localScale.z);
         }
 
         // Calculate swordBody world position by rotating local offset by parent's rotation
@@ -93,10 +105,11 @@ public abstract class Sword : MonoBehaviour
         // Debug.Log("New Current Angle: " + currentRotation);
 
         previousReflection = (sbyte)person.transform.localScale.x;
+        prevClockwise = clockwise;
 
         // Move swordBody Rigidbody2D to desired position and rotation matching parent
-        swordBody.position = desiredPos;
-        swordBody.rotation = currentRotation;
-        swordControllerBody.rotation = currentRotation;
+        swordBody.MovePosition(desiredPos);
+        swordBody.MoveRotation(currentRotation);
+        swordControllerBody.MoveRotation(currentRotation);
     }
 }
