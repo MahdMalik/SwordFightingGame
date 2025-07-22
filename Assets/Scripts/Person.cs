@@ -16,7 +16,9 @@ public abstract class Person : MonoBehaviour
     protected bool hitBySword;
     public void AddColliders()
     {
-        BoxCollider2D swordObject = transform.Find("SwordContainer").GetChild(0).GetChild(0).gameObject.GetComponent<BoxCollider2D>();;
+        //want to make sure the player doesn't collide with either the blade or the hilt
+        BoxCollider2D blade = transform.Find("SwordContainer").GetChild(0).GetChild(0).Find("Blade").GetComponent<BoxCollider2D>();;
+        BoxCollider2D hilt = transform.Find("SwordContainer").GetChild(0).GetChild(0).Find("Hilt").GetComponent<BoxCollider2D>();;
         foreach (Transform child in transform)
         {
             //for the arm and leg components
@@ -30,12 +32,14 @@ public abstract class Person : MonoBehaviour
                         if (grandchild.transform.name.IndexOf("Upper") != -1 || grandchild.transform.name.IndexOf("Lower") != -1)
                         {
                             BoxCollider2D collideObj = grandchild.gameObject.AddComponent<BoxCollider2D>();
-                            Physics2D.IgnoreCollision(swordObject, collideObj, true);
+                            Physics2D.IgnoreCollision(blade, collideObj, true);
+                            Physics2D.IgnoreCollision(hilt, collideObj, true);
                         }
                         else
                         {
                             CircleCollider2D collideObj = grandchild.gameObject.AddComponent<CircleCollider2D>();
-                            Physics2D.IgnoreCollision(swordObject, collideObj, true);
+                            Physics2D.IgnoreCollision(blade, collideObj, true);
+                            Physics2D.IgnoreCollision(hilt, collideObj, true);
                         }
                     }
                 }
@@ -46,12 +50,14 @@ public abstract class Person : MonoBehaviour
                 if (child.transform.name == "Head")
                 {
                     CircleCollider2D collideObj = child.gameObject.AddComponent<CircleCollider2D>();
-                    Physics2D.IgnoreCollision(swordObject, collideObj, true);
+                    Physics2D.IgnoreCollision(blade, collideObj, true);
+                    Physics2D.IgnoreCollision(hilt, collideObj, true);
                 }
                 else
                 {
                     BoxCollider2D collideObj = child.gameObject.AddComponent<BoxCollider2D>();
-                    Physics2D.IgnoreCollision(swordObject, collideObj, true);
+                    Physics2D.IgnoreCollision(blade, collideObj, true);
+                    Physics2D.IgnoreCollision(hilt, collideObj, true);
                 }
             }
         }
