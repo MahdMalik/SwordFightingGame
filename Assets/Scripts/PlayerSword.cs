@@ -37,6 +37,8 @@ public class PlayerSword : Sword
         //this way we can end the stabbing when it's retracted enough
         if (Mathf.Approximately(localOffset.y, STARTING_OFFSET))
             stabbing = false;
+
+        Debug.Log("Uh this should be running");
     }
 
     

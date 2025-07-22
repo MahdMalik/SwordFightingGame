@@ -26,7 +26,7 @@ public abstract class Sword : MonoBehaviour
         personPos = person.gameObject.GetComponent<Rigidbody2D>();
         previousReflection = (sbyte)person.transform.localScale.x;
         swordControllerBody = GetComponent<Rigidbody2D>();
-        swordBody = transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>();
+        swordBody = transform.GetChild(0).GetComponent<Rigidbody2D>();
     }
 
     public abstract void UpdateSword();
@@ -58,6 +58,10 @@ public abstract class Sword : MonoBehaviour
         {
             transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, transform.parent.transform.localScale.y, transform.parent.transform.localScale.z);
             // Debug.Log("We swapped!");
+
+            //now though, we probably want the blade to face the opposite way. So, we shoudl do just that
+            GameObject bladeAndHilt = transform.GetChild(0).gameObject;
+            bladeAndHilt.transform.localScale = new Vector3(bladeAndHilt.transform.localScale.x * -1, bladeAndHilt.transform.localScale.y, bladeAndHilt.transform.localScale.z);
         }
 
         if (!stabbing)
