@@ -8,14 +8,20 @@ public abstract class Sword : MonoBehaviour
     protected Person person;
     [SerializeField]
     protected float swingSpeed;
+
+    [SerializeField]
+    protected float swordLength;
+
+    [SerializeField]
+    protected float startingOffset;
+
     protected Rigidbody2D personPos;
     protected float swordForce;
     protected sbyte previousReflection;
-    protected const float STARTING_OFFSET = 2f;
     protected Rigidbody2D swordControllerBody; // Parent Rigidbody2D
 
     // Local offset of swordBody relative to swordControllerBody, for stabbing animation
-    protected Vector2 localOffset = new Vector2(0f, STARTING_OFFSET);
+    protected Vector2 localOffset;
 
     protected float currentSwingSpeed;
     protected Rigidbody2D swordBody;           // Child Rigidbody2D with its own physics
@@ -25,6 +31,7 @@ public abstract class Sword : MonoBehaviour
     bool prevClockwise;
 
     bool clashInterruption;
+    float radius;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +43,9 @@ public abstract class Sword : MonoBehaviour
         swordControllerBody = GetComponent<Rigidbody2D>();
         swordBody = transform.GetChild(0).GetComponent<Rigidbody2D>();
         clashInterruption = false;
+        localOffset = new Vector2(0f, startingOffset);
+        radius = transform.GetChild(0).Find("Blade").GetComponent<BoxCollider2D>().size.y + transform.GetChild(0).Find("Hilt").GetComponent<BoxCollider2D>().size.y / 2 +
+            (transform.GetChild(0).transform.position.y - transform.position.y);
     }
 
     public abstract void UpdateSword();

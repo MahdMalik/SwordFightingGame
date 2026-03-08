@@ -17,7 +17,7 @@ public class PlayerSword : Sword
         if (Input.GetMouseButton(0))
         {
             //if it is, being held, extend to where it should go
-            if (localOffset.y < STARTING_OFFSET + 0.6)
+            if (localOffset.y < startingOffset + 0.6)
             {
                 stabbing = true;
                 localOffset.y += 0.01f;
@@ -27,7 +27,7 @@ public class PlayerSword : Sword
         else
         {
             //otherwise, once button is let go, start retracting
-            if (localOffset.y > STARTING_OFFSET)
+            if (localOffset.y > startingOffset)
             {
                 localOffset.y -= 0.01f;
                 swordForce = 0;
@@ -35,7 +35,7 @@ public class PlayerSword : Sword
         }
 
         //this way we can end the stabbing when it's retracted enough
-        if (Mathf.Approximately(localOffset.y, STARTING_OFFSET))
+        if (Mathf.Approximately(localOffset.y, startingOffset))
             stabbing = false;
 
         Debug.Log("Uh this should be running");
